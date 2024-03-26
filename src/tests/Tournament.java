@@ -12,7 +12,7 @@ import rts.PlayerAction;
 import rts.units.UnitTypeTable;
 import javax.swing.*;
 
-import MicroBot.BaluBot;
+import BaluBot.BaluBot;
 
 import java.util.*;
 import java.util.stream.Collectors;
