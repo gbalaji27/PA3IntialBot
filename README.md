@@ -6,6 +6,29 @@ This system manages workers in a simulation environment, including harvesters, b
 **Inspiration:**
 This worker management system is inspired by Damon's Bot on GitHub. 
 
+## Worker Class Priorities
+
+The `Workers` class in this project manages the tasks assigned to different types of workers (builders, harvesters, defenders) based on certain conditions. Here's an overview of the priorities implemented within the class:
+
+1. **Attack Priority**: Workers prioritize attacking enemies if:
+   - The enemy is within their attack range or close enough.
+   - There are no harvesters or there are no bases available.
+
+2. **Harvesting Priority**: Workers prioritize harvesting resources if:
+   - They have resources to gather.
+   - There are available resources.
+   - The number of harvesters is less than the required amount.
+
+3. **Building Priority**: Workers prioritize building barracks if:
+   - There are enough resources to build a barracks.
+   - There are no ongoing barracks construction and there is no enemy within half the map.
+   - The number of builders and harvesters meets certain conditions.
+
+4. **Defending Priority**: Workers prioritize defending if none of the above conditions are met.
+
+These priorities are determined based on factors such as resource availability, enemy presence, and the need for certain units (harvesters, builders, defenders) to fulfill their respective roles effectively.
+
+
 **Variables:**
 - `shouldHarvest`: A boolean variable indicating whether harvesting is necessary based on the number of current harvesters compared to the required number.
 
