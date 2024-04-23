@@ -33,7 +33,3 @@ This worker management system is inspired by Damon's Bot on GitHub.
     - Workers are assigned tasks based on their capabilities and the current simulation requirements.
     - Logs or notifications may be generated to track worker assignments and actions.
 
-**Note:**
-- This README provides an overview of the worker management system and its functionality. Actual implementation may vary based on specific requirements and environment configurations.
-- Ensure proper initialization of worker information and lists before executing the worker assignment logic.
-- Adjust parameters and conditions as per the requirements of the simulation environment.
