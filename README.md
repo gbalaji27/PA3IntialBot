@@ -1,4 +1,4 @@
-<h1>**README: Worker Management System**</h1>
+<h1>**Worker Management System**</h1>
 
 **Overview:**
 This system manages workers in a simulation environment, including harvesters, builders, and defenders. Workers have different capabilities such as harvesting resources, building structures, and defending against enemies.
