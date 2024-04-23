@@ -1,3 +1,6 @@
+// Inspired from the help session held on 03/20. My Bot is based on the Damon's Bot with changes in "workers" class.
+
+
 package BaluBot;
 
 import java.util.ArrayList;
@@ -89,47 +92,47 @@ public class BaluBot extends AbstractionLayerAI {
             builders.removeIf(builder -> !workers.contains(builder));
             harvesters.removeIf(harvester -> !workers.contains(harvester));
             defenders.removeIf(defender -> !workers.contains(defender));
-
+    
             if (barracks.size() > 0)
                 builders.clear();
             if (resources.size() == 0)
                 harvesters.clear();
-
+    
             workers.forEach(worker -> {
                 if (worker.isIdle(game))
                     assignTask(worker);
             });
         }
-
+    
         private void assignTask(Unit worker) {
             Unit base = findClosest(bases, worker);
             Unit enemyBase = findClosest(_bases, worker);
             Unit enemy = findClosest(_units, worker);
             Unit resource = findClosest(resources, worker);
-
+    
             boolean isHarvester = harvesters.contains(worker);
             boolean isBuilder = builders.contains(worker);
             boolean isDefender = defenders.contains(worker);
-
+    
             if (enemy == null)
                 return;
-
+    
             boolean shouldPrioritizeAttack = (distance(worker,
                     enemy) <= (!isHarvester ? (worker.getAttackRange() + 3) : worker.getAttackRange())
                     || (enemyBase == null && !isHarvester)) || base == null;
-
+    
             if (shouldPrioritizeAttack) {
                 harvesters.removeIf(harvester -> harvester == worker);
                 builders.removeIf(builder -> builder == worker);
                 attack(worker, enemy);
                 return;
             }
-
+    
             if (worker.getResources() > 0) {
                 harvest(worker, resource, base);
                 return;
             }
-
+    
             boolean isBarracksBuilding = builders.size() > 0
                     && builders.get(0).getUnitActions(game).get(0).getType() == UnitAction.TYPE_PRODUCE;
             List<Unit> nearbyResources = findUnitsWithin(resources, base,
@@ -138,23 +141,23 @@ public class BaluBot extends AbstractionLayerAI {
             if (harvestersNeeded == 1 && !isBarracksBuilding) {
                 harvestersNeeded = 2;
             }
-
+    
             Unit enemyWithinHalfOfMap = findClosestWithin(_units, worker,
                     (int) Math.floor(Math.sqrt(board.getWidth() * board.getHeight()) / 2));
             boolean canBuildBarracks = (player.getResources() >= BARRACKS.cost + WORKER.cost && enemyBase != null
                     && builders.size() == 0 && !isBarracksBuilding
                     && harvesters.size() == harvestersNeeded && (!isHarvester || workers.size() >= 2)) || isBuilder;
             boolean shouldBuildBarracks = barracks.size() == 0 && enemyWithinHalfOfMap == null;
-
+    
             if (canBuildBarracks && shouldBuildBarracks) {
-
+    
                 int buildX = base.getX();
                 int buildY = base.getY();
                 buildX += (enemyBase.getX() > base.getX()) ? 1 : -1;
                 buildY += (enemyBase.getY() > base.getY()) ? -2 : 2;
                 buildX = Math.max(0, Math.min(buildX, board.getWidth() - 1));
                 buildY = Math.max(0, Math.min(buildY, board.getHeight() - 1));
-
+    
                 double minDist = Double.MAX_VALUE;
                 Unit closestWorker = null;
                 for (Unit u : workers) {
@@ -164,35 +167,35 @@ public class BaluBot extends AbstractionLayerAI {
                         closestWorker = u;
                     }
                 }
-
+    
                 if (closestWorker == worker) {
                     if (!isBuilder)
                         builders.add(worker);
                     harvesters.removeIf(harvester -> harvester == worker);
                     defenders.removeIf(defender -> defender == worker);
-
+    
                     build(worker, BARRACKS, buildX, buildY);
                     return;
                 }
             }
-
+    
             boolean canHarvest = resource != null || worker.getResources() > 0;
             boolean shouldHarvest = harvesters.size() < harvestersNeeded;
-
+    
             if ((canHarvest && shouldHarvest) || isHarvester) {
                 if (!isHarvester)
                     harvesters.add(worker);
                 defenders.removeIf(defender -> defender == worker);
-
+    
                 harvest(worker, resource, base);
                 return;
             }
-
+    
             harvesters.removeIf(harvester -> harvester == worker);
             builders.removeIf(builder -> builder == worker);
             if (!isDefender)
                 defenders.add(worker);
-
+    
             attack(worker, enemy);
         }
     }
