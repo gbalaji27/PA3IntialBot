@@ -39,9 +39,13 @@ public class Tournament {
         // players.add(new WorkerRush(utt));
         // players.add(new CoacAI(utt));
         // players.add(new BasicRush(utt));
-        players.add(new mayari(utt));
+        // players.add(new mayari(utt));
         // players.add(new ObiBotKenobi(utt));
+        // players.add(new DameBot(utt));
         players.add(new BaluBot(utt));
+        players.add(new LasyaBot(utt));
+        players.add(new HSBot(utt));
+    }
     }
 
     public static void main(String[] args) {
