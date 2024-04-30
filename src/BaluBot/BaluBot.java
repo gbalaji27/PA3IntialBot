@@ -1,6 +1,3 @@
-// Inspired from the help session held on 03/20. My Bot is based on the Damon's Bot with changes in "workers" class.
-
-
 package BaluBot;
 
 import java.util.ArrayList;
@@ -31,7 +28,7 @@ public class BaluBot extends AbstractionLayerAI {
     private PhysicalGameState board;
     private List<Unit> units, _units;
 
-    private UnitType WORKER, LIGHT, HEAVY, RANGED, BASE, BARRACKS;
+    private UnitType WORKER, LIGHT, RANGED, BARRACKS;
     private List<Unit> bases, barracks, workers, light, heavy, ranged;
     private List<Unit> _bases, _barracks, _workers, _light, _heavy, _ranged;
     private List<Unit> resources;
@@ -40,6 +37,82 @@ public class BaluBot extends AbstractionLayerAI {
     List<Unit> harvesters = new ArrayList<>();
     List<Unit> defenders = new ArrayList<>();
 
+    private int rangedWaveCounter = 0;
+    private int currentWaveSize = 4;  // Start with a wave of 4
+
+    public class QLearningAgent {
+        private double[][] Q;   // Q-table
+        private int stateCount; // Number of states
+        private int actionCount;// Number of actions
+        private double alpha;   // Learning rate
+        private double gamma;   // Discount factor
+        private double epsilon; // Exploration rate
+    
+        public QLearningAgent(int stateCount, int actionCount, double alpha, double gamma, double epsilon) {
+            this.stateCount = stateCount;
+            this.actionCount = actionCount;
+            this.alpha = alpha;
+            this.gamma = gamma;
+            this.epsilon = epsilon;
+            this.Q = new double[stateCount][actionCount];
+        }
+    
+        public int chooseAction(int state) {
+            // Epsilon-greedy action selection
+            if (Math.random() < epsilon) {
+                return (int)(Math.random() * actionCount);
+            } else {
+                return bestAction(state);
+            }
+        }
+    
+        private int bestAction(int state) {
+            int bestA = 0;
+            double maxQ = Double.NEGATIVE_INFINITY;
+            for (int a = 0; a < actionCount; a++) {
+                if (Q[state][a] > maxQ) {
+                    maxQ = Q[state][a];
+                    bestA = a;
+                }
+            }
+            return bestA;
+        }
+    
+        public void updateQ(int state, int action, int reward, int nextState) {
+            double oldQ = Q[state][action];
+            double maxQNext = maxQ(nextState);
+            Q[state][action] = oldQ + alpha * (reward + gamma * maxQNext - oldQ);
+        }
+    
+        private double maxQ(int state) {
+            double maxQ = Double.NEGATIVE_INFINITY;
+            for (int a = 0; a < actionCount; a++) {
+                if (Q[state][a] > maxQ) {
+                    maxQ = Q[state][a];
+                }
+            }
+            return maxQ;
+        }
+    
+        // Method to run the learning process, assuming you have a method to interact with the environment
+        public void run() {
+            int state = initialState();
+            while (!isTerminal(state)) {
+                int action = chooseAction(state);
+                int reward = executeAction(action); // This method needs to be defined to interact with MicroRTS
+                int nextState = observeState();     // This method needs to observe the next state from the environment
+                updateQ(state, action, reward, nextState);
+                state = nextState;
+            }
+        }
+    
+        // Dummy methods for initialization, termination check, action execution, and state observation
+        private int initialState() { return 0; }
+        private boolean isTerminal(int state) { return false; }
+        private int executeAction(int action) { return 0; } // This needs to be implemented
+        private int observeState() { return 0; } // This needs to be implemented
+    }
+    
     private class Base {
         public Base() {
             bases.forEach(base -> {
@@ -47,26 +120,27 @@ public class BaluBot extends AbstractionLayerAI {
                     assignTask(base);
             });
         }
-
+    
         private void assignTask(Unit base) {
             boolean isBarracksBuilding = builders.size() > 0
                     && builders.get(0).getUnitActions(game).get(0).getType() == UnitAction.TYPE_PRODUCE;
-            List<Unit> enemiesWithinHalfBoard = findUnitsWithin(_units, base,
-                    (int) Math.floor(Math.sqrt(board.getWidth() * board.getHeight()) / 2));
+            List<Unit> enemiesWithinQuarterBoard = findUnitsWithin(_units, base,
+                    (int) Math.floor(Math.sqrt(board.getWidth() * board.getHeight()) / 4));
             boolean shouldTrain = (barracks.size() == 0
                     && !isBarracksBuilding && workers.size() > 2
-                    && enemiesWithinHalfBoard.size() == 0)
+                    && enemiesWithinQuarterBoard.size() == 0)
                             ? player.getResources() >= BARRACKS.cost + WORKER.cost
                             : player.getResources() >= WORKER.cost;
-
+    
             if (shouldTrain && defenders.size() == 0) {
-                
+                // Set the size of the wave based on the presence of enemies
+                currentWaveSize = (enemiesWithinQuarterBoard.size() > 0) ? 4 : 0;
                 train(base, WORKER);
                 return;
             }
         }
     }
-
+    
     private class Barracks {
         public Barracks() {
             barracks.forEach(barrack -> {
@@ -74,12 +148,17 @@ public class BaluBot extends AbstractionLayerAI {
                     assignTask(barrack);
             });
         }
-
         private void assignTask(Unit barrack) {
-            if (player.getResources() >= RANGED.cost) {
-                train(barrack, RANGED);
+            if (player.getResources() >= RANGED.cost * currentWaveSize) {
+                for (int i = 0; i < currentWaveSize; i++) {
+                    train(barrack, RANGED);
+                }
+                rangedWaveCounter++;
+                // Alternate between waves of 4 and 3
+                currentWaveSize = (rangedWaveCounter % 2 == 0) ? 4 : 3;
                 return;
             }
+            // Fallback to training other unit types if resources are low
             if (player.getResources() >= LIGHT.cost) {
                 train(barrack, LIGHT);
                 return;
@@ -92,47 +171,47 @@ public class BaluBot extends AbstractionLayerAI {
             builders.removeIf(builder -> !workers.contains(builder));
             harvesters.removeIf(harvester -> !workers.contains(harvester));
             defenders.removeIf(defender -> !workers.contains(defender));
-    
+
             if (barracks.size() > 0)
                 builders.clear();
             if (resources.size() == 0)
                 harvesters.clear();
-    
+
             workers.forEach(worker -> {
                 if (worker.isIdle(game))
                     assignTask(worker);
             });
         }
-    
+
         private void assignTask(Unit worker) {
             Unit base = findClosest(bases, worker);
             Unit enemyBase = findClosest(_bases, worker);
             Unit enemy = findClosest(_units, worker);
             Unit resource = findClosest(resources, worker);
-    
+
             boolean isHarvester = harvesters.contains(worker);
             boolean isBuilder = builders.contains(worker);
             boolean isDefender = defenders.contains(worker);
-    
+
             if (enemy == null)
                 return;
-    
+
             boolean shouldPrioritizeAttack = (distance(worker,
                     enemy) <= (!isHarvester ? (worker.getAttackRange() + 3) : worker.getAttackRange())
                     || (enemyBase == null && !isHarvester)) || base == null;
-    
+
             if (shouldPrioritizeAttack) {
                 harvesters.removeIf(harvester -> harvester == worker);
                 builders.removeIf(builder -> builder == worker);
                 attack(worker, enemy);
                 return;
             }
-    
+
             if (worker.getResources() > 0) {
                 harvest(worker, resource, base);
                 return;
             }
-    
+
             boolean isBarracksBuilding = builders.size() > 0
                     && builders.get(0).getUnitActions(game).get(0).getType() == UnitAction.TYPE_PRODUCE;
             List<Unit> nearbyResources = findUnitsWithin(resources, base,
@@ -141,23 +220,23 @@ public class BaluBot extends AbstractionLayerAI {
             if (harvestersNeeded == 1 && !isBarracksBuilding) {
                 harvestersNeeded = 2;
             }
-    
+
             Unit enemyWithinHalfOfMap = findClosestWithin(_units, worker,
                     (int) Math.floor(Math.sqrt(board.getWidth() * board.getHeight()) / 2));
             boolean canBuildBarracks = (player.getResources() >= BARRACKS.cost + WORKER.cost && enemyBase != null
                     && builders.size() == 0 && !isBarracksBuilding
                     && harvesters.size() == harvestersNeeded && (!isHarvester || workers.size() >= 2)) || isBuilder;
             boolean shouldBuildBarracks = barracks.size() == 0 && enemyWithinHalfOfMap == null;
-    
+
             if (canBuildBarracks && shouldBuildBarracks) {
-    
+
                 int buildX = base.getX();
                 int buildY = base.getY();
                 buildX += (enemyBase.getX() > base.getX()) ? 1 : -1;
                 buildY += (enemyBase.getY() > base.getY()) ? -2 : 2;
                 buildX = Math.max(0, Math.min(buildX, board.getWidth() - 1));
                 buildY = Math.max(0, Math.min(buildY, board.getHeight() - 1));
-    
+
                 double minDist = Double.MAX_VALUE;
                 Unit closestWorker = null;
                 for (Unit u : workers) {
@@ -167,35 +246,35 @@ public class BaluBot extends AbstractionLayerAI {
                         closestWorker = u;
                     }
                 }
-    
+
                 if (closestWorker == worker) {
                     if (!isBuilder)
                         builders.add(worker);
                     harvesters.removeIf(harvester -> harvester == worker);
                     defenders.removeIf(defender -> defender == worker);
-    
+
                     build(worker, BARRACKS, buildX, buildY);
                     return;
                 }
             }
-    
+
             boolean canHarvest = resource != null || worker.getResources() > 0;
             boolean shouldHarvest = harvesters.size() < harvestersNeeded;
-    
+
             if ((canHarvest && shouldHarvest) || isHarvester) {
                 if (!isHarvester)
                     harvesters.add(worker);
                 defenders.removeIf(defender -> defender == worker);
-    
+
                 harvest(worker, resource, base);
                 return;
             }
-    
+
             harvesters.removeIf(harvester -> harvester == worker);
             builders.removeIf(builder -> builder == worker);
             if (!isDefender)
                 defenders.add(worker);
-    
+
             attack(worker, enemy);
         }
     }
@@ -252,37 +331,45 @@ public class BaluBot extends AbstractionLayerAI {
 
         private void assignTask(Unit ranged) {
             List<Unit> enemiesWithinAttackRange = findUnitsWithin(_units, ranged, ranged.getAttackRange());
-            List<Unit> enemiesWithinReducedAttackRange = findUnitsWithin(_units, ranged, ranged.getAttackRange() - 1);
+            boolean shouldRetreat = shouldRetreatBasedOnEnemyCount(enemiesWithinAttackRange);
 
-            List<Unit> enemiesAtMaxAttackRange = new ArrayList<>();
-            for (Unit enemy : enemiesWithinAttackRange) {
-                if (!enemiesWithinReducedAttackRange.contains(enemy)) {
-                    enemiesAtMaxAttackRange.add(enemy);
-                }
-            }
-            if (!enemiesWithinReducedAttackRange.isEmpty()) {
-                retreatOrAttack(ranged, enemiesWithinReducedAttackRange, enemiesWithinAttackRange);
-            } else if (!enemiesAtMaxAttackRange.isEmpty()) {
-                attack(ranged, findClosest(enemiesAtMaxAttackRange, ranged));
+            if (shouldRetreat) {
+                retreatOrDefend(ranged, enemiesWithinAttackRange);
             } else {
-                attackWithMarch(ranged);
+                if (!enemiesWithinAttackRange.isEmpty()) {
+                    attackClosestEnemy(ranged, enemiesWithinAttackRange);
+                } else {
+                    advanceOrHold(ranged);
+                }
             }
         }
 
-        private void retreatOrAttack(Unit ranged, List<Unit> enemiesWithinReducedAttackRange,
-                List<Unit> enemiesWithinAttackRange) {
-            List<Point> possibleRetreats = calculateRetreatPositions(ranged, enemiesWithinAttackRange);
-            Point bestRetreat = chooseBestRetreat(possibleRetreats, enemiesWithinAttackRange);
+        private boolean shouldRetreatBasedOnEnemyCount(List<Unit> enemies) {
+            // Define logic based on the count and type of enemy units
+            return enemies.size() > 3;  // Example condition
+        }
+
+        private void retreatOrDefend(Unit ranged, List<Unit> enemies) {
+            // Implement retreat logic or positional holding
+            List<Point> possibleRetreats = calculateRetreatPositions(ranged, enemies);
+            Point bestRetreat = chooseBestRetreat(possibleRetreats, enemies);
             if (bestRetreat != null) {
                 move(ranged, bestRetreat.x, bestRetreat.y);
             } else {
-                Unit target = findClosest(enemiesWithinAttackRange, ranged);
-                if (target != null) {
-                    attack(ranged, target);
-                } else {
-                    attackWithMarch(ranged);
-                }
+                attackClosestEnemy(ranged, enemies);
             }
+        }
+
+        private void attackClosestEnemy(Unit ranged, List<Unit> enemies) {
+            Unit target = findClosest(enemies, ranged);
+            if (target != null) {
+                attack(ranged, target);
+            }
+        }
+
+        private void advanceOrHold(Unit ranged) {
+            // Implement logic to either advance towards the enemy or hold position
+            attackWithMarch(ranged);
         }
 
         private boolean isValidRetreat(int x, int y) {
@@ -301,6 +388,7 @@ public class BaluBot extends AbstractionLayerAI {
                             .min().orElse(Double.MAX_VALUE)))
                     .orElse(null);
         }
+
     }
 
     private void attackWithMarch(Unit unit) {
@@ -384,36 +472,36 @@ public class BaluBot extends AbstractionLayerAI {
         return translateActions(player, game);
     }
 
-@SuppressWarnings("unchecked")
-public void setActionState(int player, GameState game) {
-    this.player = game.getPlayer(player);
-    this.game = game;
-    board = game.getPhysicalGameState();
+    @SuppressWarnings("unchecked")
+    public void setActionState(int player, GameState game) {
+        this.player = game.getPlayer(player);
+        this.game = game;
+        board = game.getPhysicalGameState();
 
-    resetUnits();
-    for (Unit unit : board.getUnits()) {
-        if (unit.getPlayer() == player) {
-            addUnitToLists(unit, units, bases, barracks, workers, light, heavy, ranged);
-        } else if (unit.getPlayer() >= 0) {
-            addUnitToLists(unit, _units, _bases, _barracks, _workers, _light, _heavy, _ranged);
-        } else {
-            resources.add(unit);
+        resetUnits();
+        for (Unit unit : board.getUnits()) {
+            if (unit.getPlayer() == player) {
+                addUnitToLists(unit, units, bases, barracks, workers, light, heavy, ranged);
+            } else if (unit.getPlayer() >= 0) {
+                addUnitToLists(unit, _units, _bases, _barracks, _workers, _light, _heavy, _ranged);
+            } else {
+                resources.add(unit);
+            }
         }
     }
-}
 
-@SuppressWarnings("unchecked")
-private void addUnitToLists(Unit unit, List<Unit>... lists) {
-    lists[0].add(unit);
-    switch (unit.getType().name) {
-        case "Base"     -> lists[1].add(unit);
-        case "Barracks" -> lists[2].add(unit);
-        case "Worker"   -> lists[3].add(unit);
-        case "Light"    -> lists[4].add(unit);
-        case "Heavy"    -> lists[5].add(unit);
-        case "Ranged"   -> lists[6].add(unit);
+    @SuppressWarnings("unchecked")
+    private void addUnitToLists(Unit unit, List<Unit>... lists) {
+        lists[0].add(unit);
+        switch (unit.getType().name) {
+            case "Base"     -> lists[1].add(unit);
+            case "Barracks" -> lists[2].add(unit);
+            case "Worker"   -> lists[3].add(unit);
+            case "Light"    -> lists[4].add(unit);
+            case "Heavy"    -> lists[5].add(unit);
+            case "Ranged"   -> lists[6].add(unit);
+        }
     }
-}
 
 
     public BaluBot(UnitTypeTable unitTypeTable) {
@@ -447,13 +535,11 @@ private void addUnitToLists(Unit unit, List<Unit>... lists) {
                     LIGHT = unitType;
                     break;
                 case "Heavy":
-                    HEAVY = unitType;
                     break;
                 case "Ranged":
                     RANGED = unitType;
                     break;
                 case "Base":
-                    BASE = unitType;
                     break;
                 case "Barracks":
                     BARRACKS = unitType;
@@ -480,7 +566,7 @@ private void addUnitToLists(Unit unit, List<Unit>... lists) {
         resources = new ArrayList<>();
     }
 
-    @Override
+@Override
     public List<ParameterSpecification> getParameters() {
         return null;
     }
