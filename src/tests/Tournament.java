@@ -3,6 +3,7 @@ package tests;
 import ai.PassiveAI;
 import ai.RandomBiasedAI;
 import ai.abstraction.WorkerDefense;
+import ai.coac.CoacAI;
 import ai.core.AI;
 import gui.PhysicalGameStatePanel;
 import mayariBot.mayari;
@@ -13,6 +14,10 @@ import rts.units.UnitTypeTable;
 import javax.swing.*;
 
 import BaluBot.BaluBot;
+import DameBot.DameBot;
+import HSBot.HSBot;
+import LasyaBot.LasyaBot;
+import RitsBot.RitsBot;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -37,15 +42,15 @@ public class Tournament {
         // players.add(new LightDefense(utt));
         // players.add(new WorkerDefense(utt));
         // players.add(new WorkerRush(utt));
-        // players.add(new CoacAI(utt));
+        players.add(new CoacAI(utt));
         // players.add(new BasicRush(utt));
-        // players.add(new mayari(utt));
+        players.add(new mayari(utt));
         // players.add(new ObiBotKenobi(utt));
-        // players.add(new DameBot(utt));
-        players.add(new BaluBot(utt));
         players.add(new LasyaBot(utt));
+        players.add(new BaluBot(utt));
+        players.add(new RitsBot(utt));
         players.add(new HSBot(utt));
-    }
+        // players.add(new DameBot(utt));
     }
 
     public static void main(String[] args) {
