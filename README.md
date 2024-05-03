@@ -121,4 +121,4 @@ Defending is the fallback priority when other conditions are not met.
 
 ---
 
-*NOTE : My BaluBot is inspired by DamonBot( Damon's HardcodedBot ) with these implementations Worker Management System and implementations for the Final Tournament.* 
+**NOTE : My BaluBot is inspired by DamonBot( Damon's HardcodedBot ) with my idea of Worker Management System and implementations for the Final Tournament.** 
