@@ -1,20 +1,23 @@
-### </h1>BaluBot Updates ( Final Tournament )</h1>
+---
+
+# BaluBot ( Final Tournament ) 
 
 ## Introduction
-This document provides an overview of the significant updates and features introduced in the latest version of BaluBot. Building on its predecessor, this release focuses on enhancing unit management, tactical decision-making, and strategic capabilities in the game environment.
 
-## Key Updates
+This README document outlines the updates and features introduced in the latest version of BaluBot. This version emphasizes improvements in unit management, tactical decision-making, and strategic capabilities, enhancing gameplay in a competitive environment.
+
+## BaluBot Updates
 
 ### 1. HEAVY Unit Type Inclusion
-- **Feature**: Introduction of the "HEAVY" unit type to diversify tactical options.
-- **Code Snippet**:
+- **Description**: The introduction of the "HEAVY" unit type allows for more diverse tactical approaches.
+- **Code Implementation**:
   ```java
   private UnitType HEAVY;
   ```
 
 ### 2. Refined Attack Prioritization
-- **Enhancement**: Improved logic for deciding when to prioritize attacks, making tactics more aggressive and effective.
-- **Code Snippet**:
+- **Description**: Enhanced decision logic for prioritizing attacks to foster more aggressive and effective tactics.
+- **Code Implementation**:
   ```java
   boolean shouldPrioritizeAttack = (distance(worker, enemy) <= (!isHarvester ? (worker.getAttackRange() + 3) : worker.getAttackRange()) || (enemyBase == null && !isHarvester)) || base == null;
   if (shouldPrioritizeAttack) {
@@ -26,8 +29,8 @@ This document provides an overview of the significant updates and features intro
   ```
 
 ### 3. Enhanced Barrack Building Logic
-- **Update**: More strategic placement and timing for barracks construction.
-- **Code Snippet**:
+- **Description**: Optimized conditions under which barracks are constructed for more strategic placement and timing.
+- **Code Implementation**:
   ```java
   boolean canBuildBarracks = (player.getResources() >= BARRACKS.cost + WORKER.cost && enemyBase != null && builders.size() == 0 && !isBarracksBuilding && harvesters.size() == harvestersNeeded && (!isHarvester || workers.size() >= 2)) || isBuilder;
   boolean shouldBuildBarracks = barracks.size() == 0 && enemyWithinHalfOfMap == null;
@@ -38,8 +41,8 @@ This document provides an overview of the significant updates and features intro
   ```
 
 ### 4. Improved Retreat Mechanics
-- **Feature**: Sophisticated retreat logic to balance survival with offensive capabilities.
-- **Code Snippet**:
+- **Description**: Sophisticated retreat logic to balance survival with maintaining offensive capabilities.
+- **Code Implementation**:
   ```java
   private void retreatOrAttack(Unit ranged, List<Unit> enemiesWithinReducedAttackRange, List<Unit> enemiesWithinAttackRange) {
       if (bestRetreat != null) {
@@ -53,18 +56,18 @@ This document provides an overview of the significant updates and features intro
           }
       }
   ```
-  
+
 ### 5. Enemy Proximity
-- **Feature**: Using a quarter of the diagonal as a measurement for enemy proximity helps the AI decide on the safety of expanding its workforce.
-- **Code Snippet**:
+- **Description**: Utilization of a quarter of the game board's diagonal to measure enemy proximity, aiding in strategic workforce expansion.
+- **Code Implementation**:
   ```java
   List<Unit> enemiesWithinQuarterBoard = findUnitsWithin(_units, base,
   (int) Math.floor(Math.sqrt(board.getWidth() * board.getHeight()) / 4));
-
+  ```
 
 ### 6. Adjusting Wave Size Based on Enemy Presence
-- **Update**: Dynamic adjustment of the number of units trained based on enemy proximity.
-- **Code Snippet**:
+- **Description**: Dynamic adjustment of unit training volume based on enemy proximity.
+- **Code Implementation**:
   ```java
   currentWaveSize = (enemiesWithinQuarterBoard.size() > 0) ? 4 : 0;
   train(base, WORKER);
@@ -72,65 +75,48 @@ This document provides an overview of the significant updates and features intro
   ```
 
 ## Conclusion
-The updates in BaluBot aim to refine its performance significantly in its strategic environment by concentrating on the quadrant where the base is located, improving both its defensive and offensive operations. This version is expected to offer robust tactical gameplay, enhanced AI decisions, and more immersive player experience.
 
-______________________________________________________________________________________________________________________________________________________
+These enhancements in BaluBot focus on refining the bot's performance in strategic environments, improving both defensive and offensive operations, thus ensuring a robust tactical gameplay experience.
 
-**Worker Management System (for PA5)**
+---
 
-**Overview:**
-This system manages workers in a simulation environment, including harvesters, builders, and defenders. Workers have different capabilities such as harvesting resources, building structures, and defending against enemies.
+# Worker Management System ( PA6 Tournament )
 
-**Inspiration:**
-This worker management system is inspired by Damon's Bot on GitHub. 
+## Overview
 
-## Worker Class Priorities
+This system manages workers in a simulation environment, differentiating roles among harvesters, builders, and defenders. It's inspired by Damon's Bot on GitHub, and focuses on efficiently allocating tasks based on the current needs and strategic situation.
 
-The `Workers` class in this project manages the tasks assigned to different types of workers (builders, harvesters, defenders) based on certain conditions. Here's an overview of the priorities implemented within the class:
+## Priorities
 
-1. **Attack Priority**: Workers prioritize attacking enemies if:
-   - The enemy is within their attack range or close enough.
-   - There are no harvesters or there are no bases available.
+### Attack Priority
+Workers prioritize attacking under the following conditions:
+- Enemy within attack range.
+- No available harvesters or bases.
 
-2. **Harvesting Priority**: Workers prioritize harvesting resources if:
-   - They have resources to gather.
-   - There are available resources.
-   - The number of harvesters is less than the required amount.
+### Harvesting Priority
+Harvesting is prioritized when:
+- There are resources to be gathered.
+- The number of harvesters is below the required threshold.
 
-3. **Building Priority**: Workers prioritize building barracks if:
-   - There are enough resources to build a barracks.
-   - There are no ongoing barracks construction and there is no enemy within half the map.
-   - The number of builders and harvesters meets certain conditions.
+### Building Priority
+Building is prioritized under conditions such as:
+- Sufficient resources and no ongoing construction.
+- No enemy presence within a critical range.
 
-4. **Defending Priority**: Workers prioritize defending if none of the above conditions are met.
+### Defending Priority
+Defending is the fallback priority when other conditions are not met.
 
-These priorities are determined based on factors such as resource availability, enemy presence, and the need for certain units (harvesters, builders, defenders) to fulfill their respective roles effectively.
+## Functionality
 
+- **Harvest Assignment**: Workers suitable for harvesting are assigned based on need and capability.
+- **Defense Assignment**: Workers are reassigned to defense roles if attack conditions are met.
+- **Building Assignment**: Builders are directed to construct structures based on strategic needs and resource availability.
 
-**Variables:**
-- `shouldHarvest`: A boolean variable indicating whether harvesting is necessary based on the number of current harvesters compared to the required number.
+## Usage
 
-**Functionality:**
+- **Input Requirements**: Information about each worker’s capabilities and current
 
-1. **Assigning Workers to Harvest:**
-    - If a worker can harvest and harvesting is needed, or if the worker is already a harvester:
-        - If the worker is not already a harvester, it is added to the harvesters list.
-        - The worker is removed from the defenders list if found.
-        - The `harvest` method is called with the worker, a resource, and a base as parameters.
+ status.
+- **Output**: Task assignments and possible notifications for monitoring purposes.
 
-2. **Handling Non-Harvesting Workers:**
-    - If the worker is not assigned to harvest:
-        - The worker is removed from the harvesters and builders lists.
-   
-3. **Assigning Workers to Defend:**
-    - If the worker is not already a defender, it is added to the defenders list.
-    - The `attack` method is called with the worker and an enemy as parameters.
-
-**Usage:**
-- **Input:** 
-    - The system expects information about each worker, including their capabilities and current status.
-    - The `shouldHarvest` variable should be updated based on the number of harvesters needed.
-- **Output:**
-    - Workers are assigned tasks based on their capabilities and the current simulation requirements.
-    - Logs or notifications may be generated to track worker assignments and actions.
-
+---
