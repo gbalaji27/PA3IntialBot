@@ -119,4 +119,6 @@ Defending is the fallback priority when other conditions are not met.
  status.
 - **Output**: Task assignments and possible notifications for monitoring purposes.
 
+
+* My BaluBot is inspired by DamonBot( Damon's HardcodedBot ) with these implementations Worker Management System and implementations for the Final Tournament.
 ---
