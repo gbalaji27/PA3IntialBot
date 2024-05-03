@@ -1,4 +1,4 @@
-</h1>### BaluBot Updates ( Final Tournament )</h1>
+### </h1>BaluBot Updates ( Final Tournament )</h1>
 
 ## Introduction
 This document provides an overview of the significant updates and features introduced in the latest version of BaluBot. Building on its predecessor, this release focuses on enhancing unit management, tactical decision-making, and strategic capabilities in the game environment.
