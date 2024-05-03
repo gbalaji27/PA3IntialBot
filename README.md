@@ -1,4 +1,4 @@
-### BaluBot Updates ( Final Tournament )
+</h1>### BaluBot Updates ( Final Tournament )</h1>
 
 ## Introduction
 This document provides an overview of the significant updates and features introduced in the latest version of BaluBot. Building on its predecessor, this release focuses on enhancing unit management, tactical decision-making, and strategic capabilities in the game environment.
@@ -74,11 +74,9 @@ This document provides an overview of the significant updates and features intro
 ## Conclusion
 The updates in BaluBot aim to refine its performance significantly in its strategic environment by concentrating on the quadrant where the base is located, improving both its defensive and offensive operations. This version is expected to offer robust tactical gameplay, enhanced AI decisions, and more immersive player experience.
 
+______________________________________________________________________________________________________________________________________________________
 
-
-
-
-<h1>**Worker Management System (for PA5) **</h1>
+**Worker Management System (for PA5)**
 
 **Overview:**
 This system manages workers in a simulation environment, including harvesters, builders, and defenders. Workers have different capabilities such as harvesting resources, building structures, and defending against enemies.
