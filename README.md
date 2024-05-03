@@ -78,7 +78,7 @@ The updates in BaluBot aim to refine its performance significantly in its strate
 
 
 
-<h1>**Worker Management System**</h1>(for PA5)
+<h1>**Worker Management System (for PA5) **</h1>
 
 **Overview:**
 This system manages workers in a simulation environment, including harvesters, builders, and defenders. Workers have different capabilities such as harvesting resources, building structures, and defending against enemies.
