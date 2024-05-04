@@ -152,7 +152,7 @@ Defending is the fallback priority when other conditions are not met.
 |                  | ZeroBot  | 25.00%   | 1    | 3      | 0     |
 |                  | mayari   | 75.00%   | 3    | 1      | 0     |
 
-where __BaluBot__ is my implementation on DameBot ( HeadStart Code )                                                                                    / __ZeroBot__ is my HeadStart Code for PA5
+where __BaluBot__ is my implementation on DameBot ( HeadStart Code ) /                                                                      __ZeroBot__ is my HeadStart Code for PA5
 
 **My Observation**
 BaluBot performs significantly better than the ZeroBot in most of the maps. My Bot struggles in a few maps where the maps are much more difficult than the traditional maps like 16x16.
