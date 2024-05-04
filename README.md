@@ -153,8 +153,9 @@ Defending is the fallback priority when other conditions are not met.
 |                  | mayari   | 75.00%   | 3    | 1      | 0     |
 
 
-BaluBot: Implementation on DameBot (HeadStart Code).
+BaluBot: Implementation on DameBot (HeadStart Code).  
 ZeroBot: HeadStart Code for PA5.
+
 
 **My Observation**
 BaluBot performs significantly better than the ZeroBot in most of the maps. My Bot struggles in a few maps where the maps are much more difficult than the traditional maps like 16x16.
