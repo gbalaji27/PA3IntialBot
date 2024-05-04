@@ -131,28 +131,4 @@ Defending is the fallback priority when other conditions are not met.
 
 
 
-Tournament Results (maps/16x16/basesWorkers16x16.xml)
-================================================
-        Rank 1: CoacAI               6 Wins | 0 Losses | 0 Draws | 100.00% Win Rate
-        Rank 2: LasyaBot             4 Wins | 2 Losses | 0 Draws | 66.67% Win Rate
-        Rank 3: ZeroBot              2 Wins | 4 Losses | 0 Draws | 33.33% Win Rate
-        Rank 4: mayari               0 Wins | 6 Losses | 0 Draws | 0.00% Win Rate
-------------------------------------------------
-        LasyaBot             vs CoacAI               0 Wins | 2 Losses | 0 Draws
-                                mayari               2 Wins | 0 Losses | 0 Draws
-                                ZeroBot              2 Wins | 0 Losses | 0 Draws
-------------------------------------------------
-        CoacAI               vs LasyaBot             2 Wins | 0 Losses | 0 Draws
-                                mayari               2 Wins | 0 Losses | 0 Draws
-                                ZeroBot              2 Wins | 0 Losses | 0 Draws
-------------------------------------------------
-        ZeroBot              vs LasyaBot             0 Wins | 2 Losses | 0 Draws
-                                CoacAI               0 Wins | 2 Losses | 0 Draws
-                                mayari               2 Wins | 0 Losses | 0 Draws
-------------------------------------------------
-        mayari               vs LasyaBot             0 Wins | 2 Losses | 0 Draws
-                                CoacAI               0 Wins | 2 Losses | 0 Draws
-                                ZeroBot              0 Wins | 2 Losses | 0 Draws
-------------------------------------------------
-        Total Tournament Duration: 154806ms
-================================================
+
