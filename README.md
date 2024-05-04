@@ -150,19 +150,6 @@ where BaluBot is my implementation on DameBot ( HeadStart Code )
 BaluBot performs significantly better than the ZeroBot in most of the maps. My Bot struggles in a few maps where the maps are much more difficult than the traditional maps like 16x16.
 
 
-This will create two separate tables side by side. Adjust the content within `<td>` tags as needed to match your actual data.
-
-where BaluBot is my implementation on DameBot ( HeadStart Code )
-      ZeroBot is my HeadStart Code for PA5
-
-**My Observation**
-BaluBot performs significantly better than the ZeroBot in most of the maps. My Bot struggles in a few maps where the maps are much more difficult than the traditional maps like 16x16.
-where BaluBot is my implementation on DameBot ( HeadStart Code )
-      ZeroBot is my HeadStart Code for PA5
-
-**My Observation**
-BaluBot performs significantly better than the ZeroBot in most of the maps. My Bot struggles in a few maps where the maps are much more difficult than the traditional maps like 16x16.
-
       
 
 
