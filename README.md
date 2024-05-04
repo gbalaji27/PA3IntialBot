@@ -134,11 +134,11 @@ Defending is the fallback priority when other conditions are not met.
 |                  | BaluBot  | 100.00%  | 4    | 0      | 0     |
 |                  | ZeroBot  | 50.00%   | 2    | 2      | 0     |
 |                  | mayari   | 00.00%   | 0    | 4      | 0     |
-| **BloodBath**    |          |          |      |        |       |
+|                            **BloodBath**                       |          
 |                  | BaluBot  | 50.00%   | 4    | 4      | 0     |
 |                  | ZeroBot  | 50.00%   | 4    | 4      | 0     |
 |                  | mayari   | 50.00%   | 4    | 4      | 0     |
-| **GardenOfWar**  |          |          |      |        |       |
+|                            **GardenOfWar**                     |
 |                  | BaluBot  | 50.00%   | 2    | 2      | 0     |
 |                  | ZeroBot  | 25.00%   | 1    | 3      | 0     |
 |                  | mayari   | 75.00%   | 3    | 1      | 0     |
