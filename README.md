@@ -126,6 +126,21 @@ Defending is the fallback priority when other conditions are not met.
 
 
 
+**16x16** maps/16x16/basesWorkers16x16.xml
+
+|Name              |Win Rate|Wins|Losses|Draws|
+|------------------|--------|----|------|-----|
+|CoacAI            |100.00% |6   |0     |0    |
+|BaluBot           |50.00%  |3   |3     |0    |
+|ZeroBot           |33.33%  |2   |4     |0    |
+|mayari            |16.67%  |1   |5     |0    |
+
+
+
+
+
+
+
 
 
 
