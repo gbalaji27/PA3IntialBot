@@ -128,26 +128,28 @@ Defending is the fallback priority when other conditions are not met.
 
 ## My Simulations
 
-**16x16** maps/16x16/basesWorkers16x16.xml
-|Name              |Win Rate|Wins|Losses|Draws|
-|------------------|--------|----|------|-----|
-|BaluBot           |100.00% |4   |0     |0    |
-|ZeroBot           |50.00%  |2   |2     |0    |
-|mayari            |00.00%  |0   |4     |0    |
+| Map              | Name     | Win Rate | Wins | Losses | Draws |
+|------------------|----------|----------|------|--------|-------|
+| **16x16**        |          |          |      |        |       |
+|                  | BaluBot  | 100.00%  | 4    | 0      | 0     |
+|                  | ZeroBot  | 50.00%   | 2    | 2      | 0     |
+|                  | mayari   | 00.00%   | 0    | 4      | 0     |
+| **BloodBath**    |          |          |      |        |       |
+|                  | BaluBot  | 50.00%   | 4    | 4      | 0     |
+|                  | ZeroBot  | 50.00%   | 4    | 4      | 0     |
+|                  | mayari   | 50.00%   | 4    | 4      | 0     |
+| **GardenOfWar**  |          |          |      |        |       |
+|                  | BaluBot  | 50.00%   | 2    | 2      | 0     |
+|                  | ZeroBot  | 25.00%   | 1    | 3      | 0     |
+|                  | mayari   | 75.00%   | 3    | 1      | 0     |
 
-**BloodBath** maps/BroodWar/(4)BloodBath.scmB.xml
-|Name              |Win Rate|Wins|Losses|Draws|
-|------------------|--------|----|------|-----|
-|BaluBot           |50.00%  |4   |4     |0    |
-|ZeroBot           |50.00%  |4   |4     |0    |
-|mayari            |50.00%  |4   |4     |0    |
+where BaluBot is my implementation on DameBot ( HeadStart Code )
+      ZeroBot is my HeadStart Code for PA5
 
-**GardenOfWar** maps/GardenOfWar64x64.xml
-|Name              |Win Rate|Wins|Losses|Draws|
-|------------------|--------|----|------|-----|
-|BaluBot           |50.00%  |2   |4     |0    |
-|ZeroBot           |50.33%  |2   |2     |2    |
-|mayari            |16.67%  |1   |3     |2    |
+**My Observation**
+BaluBot performs significantly better than the ZeroBot in most of the maps. My Bot struggles in a few maps where the maps are much more difficult than the traditional maps like 16x16.
+
+      
 
 
 
