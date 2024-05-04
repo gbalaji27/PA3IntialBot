@@ -78,54 +78,6 @@ This README document outlines the updates and features introduced in the latest 
 
 These enhancements in BaluBot focus on refining the bot's performance in strategic environments, improving both defensive and offensive operations, thus ensuring a robust tactical gameplay experience.
 
----
-
-# Worker Management System ( PA6 Tournament )
-
-## Overview
-
-This system manages workers in a simulation environment, differentiating roles among harvesters, builders, and defenders. It's inspired by Damon's Bot on GitHub, and focuses on efficiently allocating tasks based on the current needs and strategic situation.
-
-## Priorities
-
-### Attack Priority
-Workers prioritize attacking under the following conditions:
-- Enemy within attack range.
-- No available harvesters or bases.
-
-### Harvesting Priority
-Harvesting is prioritized when:
-- There are resources to be gathered.
-- The number of harvesters is below the required threshold.
-
-### Building Priority
-Building is prioritized under conditions such as:
-- Sufficient resources and no ongoing construction.
-- No enemy presence within a critical range.
-
-### Defending Priority
-Defending is the fallback priority when other conditions are not met.
-
-## Functionality
-
-- **Harvest Assignment**: Workers suitable for harvesting are assigned based on need and capability.
-- **Defense Assignment**: Workers are reassigned to defense roles if attack conditions are met.
-- **Building Assignment**: Builders are directed to construct structures based on strategic needs and resource availability.
-
-## Usage
-
-- **Input Requirements**: Information about each worker’s capabilities and current
-
- status.
-- **Output**: Task assignments and possible notifications for monitoring purposes.
-
----
-
-**NOTE : My BaluBot is inspired by DameBot ( Damon's Bot ) with my idea of Worker Management System and implementations that I mentioned above for the Final Tournament.** 
-
-
-
-
 ## My Simulations
 
  Map              | Name     | Win Rate | Wins | Losses | Draws |
@@ -157,6 +109,55 @@ ZeroBot: HeadStart Code for PA5.
 
 **My Observation:**  
 BaluBot performs significantly better than the ZeroBot in most of the maps. My Bot struggles in a few maps where the maps are much more difficult than the traditional maps like 16x16.
+
+---
+
+## Worker Management System ( PA6 Tournament )
+
+### Overview
+
+This system manages workers in a simulation environment, differentiating roles among harvesters, builders, and defenders. It's inspired by Damon's Bot on GitHub, and focuses on efficiently allocating tasks based on the current needs and strategic situation.
+
+### Priorities
+
+#### Attack Priority
+Workers prioritize attacking under the following conditions:
+- Enemy within attack range.
+- No available harvesters or bases.
+
+#### Harvesting Priority
+Harvesting is prioritized when:
+- There are resources to be gathered.
+- The number of harvesters is below the required threshold.
+
+#### Building Priority
+Building is prioritized under conditions such as:
+- Sufficient resources and no ongoing construction.
+- No enemy presence within a critical range.
+
+#### Defending Priority
+Defending is the fallback priority when other conditions are not met.
+
+### Functionality
+
+- **Harvest Assignment**: Workers suitable for harvesting are assigned based on need and capability.
+- **Defense Assignment**: Workers are reassigned to defense roles if attack conditions are met.
+- **Building Assignment**: Builders are directed to construct structures based on strategic needs and resource availability.
+
+### Usage
+
+- **Input Requirements**: Information about each worker’s capabilities and current
+
+ status.
+- **Output**: Task assignments and possible notifications for monitoring purposes.
+
+---
+
+**NOTE : My BaluBot is inspired by DameBot ( Damon's Bot ) with my idea of Worker Management System and implementations that I mentioned above for the Final Tournament.** 
+
+
+
+
 
 
       
