@@ -128,65 +128,27 @@ Defending is the fallback priority when other conditions are not met.
 
 ## My Simulations
 
-To display the tables side by side more neatly in GitHub, you can use HTML `<table>` elements within the Markdown. Here's how you can format it:
+ Map              | Name     | Win Rate | Wins | Losses | Draws |
+|------------------|----------|----------|------|--------|-------|
+| **16x16**        |          |          |      |        |       |
+|                  | BaluBot  | 100.00%  | 4    | 0      | 0     |
+|                  | ZeroBot  | 50.00%   | 2    | 2      | 0     |
+|                  | mayari   | 00.00%   | 0    | 4      | 0     |
+| **BloodBath**    |          |          |      |        |       |
+|                  | BaluBot  | 50.00%   | 4    | 4      | 0     |
+|                  | ZeroBot  | 50.00%   | 4    | 4      | 0     |
+|                  | mayari   | 50.00%   | 4    | 4      | 0     |
+| **GardenOfWar**  |          |          |      |        |       |
+|                  | BaluBot  | 50.00%   | 2    | 2      | 0     |
+|                  | ZeroBot  | 25.00%   | 1    | 3      | 0     |
+|                  | mayari   | 75.00%   | 3    | 1      | 0     |
 
-```markdown
-<table>
-  <tr>
-    <th>Map</th>
-    <th>Name</th>
-    <th>Win Rate</th>
-    <th>Wins</th>
-    <th>Losses</th>
-    <th>Draws</th>
-  </tr>
-  <tr>
-    <td rowspan="4"><strong>16x16</strong></td>
-    <td>BaluBot</td>
-    <td>100.00%</td>
-    <td>4</td>
-    <td>0</td>
-    <td>0</td>
-  </tr>
-  <tr>
-    <td>ZeroBot</td>
-    <td>50.00%</td>
-    <td>2</td>
-    <td>2</td>
-    <td>0</td>
-  </tr>
-  <tr>
-    <td>mayari</td>
-    <td>00.00%</td>
-    <td>0</td>
-    <td>4</td>
-    <td>0</td>
-  </tr>
-  <tr></tr>
-  <tr>
-    <td rowspan="4"><strong>BloodBath</strong></td>
-    <td>BaluBot</td>
-    <td>50.00%</td>
-    <td>4</td>
-    <td>4</td>
-    <td>0</td>
-  </tr>
-  <tr>
-    <td>ZeroBot</td>
-    <td>50.00%</td>
-    <td>4</td>
-    <td>4</td>
-    <td>0</td>
-  </tr>
-  <tr>
-    <td>mayari</td>
-    <td>50.00%</td>
-    <td>4</td>
-    <td>4</td>
-    <td>0</td>
-  </tr>
-</table>
-```
+where BaluBot is my implementation on DameBot ( HeadStart Code )
+      ZeroBot is my HeadStart Code for PA5
+
+**My Observation**
+BaluBot performs significantly better than the ZeroBot in most of the maps. My Bot struggles in a few maps where the maps are much more difficult than the traditional maps like 16x16.
+
 
 This will create two separate tables side by side. Adjust the content within `<td>` tags as needed to match your actual data.
 
