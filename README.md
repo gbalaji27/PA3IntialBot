@@ -131,17 +131,22 @@ Defending is the fallback priority when other conditions are not met.
 **16x16** maps/16x16/basesWorkers16x16.xml
 |Name              |Win Rate|Wins|Losses|Draws|
 |------------------|--------|----|------|-----|
-|CoacAI            |100.00% |6   |0     |0    |
-|BaluBot           |50.00%  |3   |3     |0    |
-|ZeroBot           |33.33%  |2   |4     |0    |
-|mayari            |16.67%  |1   |5     |0    |
+|BaluBot           |100.00% |4   |0     |0    |
+|ZeroBot           |50.00%  |2   |2     |0    |
+|mayari            |00.00%  |0   |4     |0    |
 
 **BloodBath** maps/BroodWar/(4)BloodBath.scmB.xml
 |Name              |Win Rate|Wins|Losses|Draws|
 |------------------|--------|----|------|-----|
-|CoacAI            |66.67%  |4   |0     |2    |
-|BaluBot           |33.33%  |2   |4     |0    |
-|ZeroBot           |33.33%  |2   |2     |2    |
+|BaluBot           |50.00%  |4   |4     |0    |
+|ZeroBot           |50.00%  |4   |4     |0    |
+|mayari            |50.00%  |4   |4     |0    |
+
+**GardenOfWar** maps/GardenOfWar64x64.xml
+|Name              |Win Rate|Wins|Losses|Draws|
+|------------------|--------|----|------|-----|
+|BaluBot           |50.00%  |2   |4     |0    |
+|ZeroBot           |50.33%  |2   |2     |2    |
 |mayari            |16.67%  |1   |3     |2    |
 
 
