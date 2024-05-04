@@ -131,13 +131,22 @@ Defending is the fallback priority when other conditions are not met.
  Map              | Name     | Win Rate | Wins | Losses | Draws |
 |------------------|----------|----------|------|--------|-------|
 | **16x16**        |          |          |      |        |       |
+|                  | BaluBot  | 100.00%  | 2    | 0      | 0     |
+|                  | ZeroBot  | 00.00%   | 0    | 2      | 0     |
+| **16x16**        |          |          |      |        |       |
 |                  | BaluBot  | 100.00%  | 4    | 0      | 0     |
 |                  | ZeroBot  | 50.00%   | 2    | 2      | 0     |
 |                  | mayari   | 00.00%   | 0    | 4      | 0     |
 | **BloodBath**    |          |          |      |        |       |
+|                  | BaluBot  | 100.00%  | 2    | 0      | 0     |
+|                  | ZeroBot  | 00.00%   | 0    | 2      | 0     |
+| **BloodBath**    |          |          |      |        |       |
 |                  | BaluBot  | 50.00%   | 4    | 4      | 0     |
 |                  | ZeroBot  | 50.00%   | 4    | 4      | 0     |
 |                  | mayari   | 50.00%   | 4    | 4      | 0     |
+| **GardenOfWar**  |          |          |      |        |       |
+|                  | BaluBot  | 100.00%  | 2    | 0      | 0     |
+|                  | ZeroBot  | 00.00%   | 0    | 2      | 0     |
 | **GardenOfWar**  |          |          |      |        |       |
 |                  | BaluBot  | 50.00%   | 2    | 2      | 0     |
 |                  | ZeroBot  | 25.00%   | 1    | 3      | 0     |
